@@ -5,6 +5,8 @@
 #include <time.h>
 #include<vector>
 #include<algorithm>
+#include<set>
+
 using namespace std;
 
 const int kStudents = 25;
@@ -114,18 +116,25 @@ int main()
 
 int main(){
 
-   vector<int> sortedNumb;
+  vector<int> sortedNumb;
+  vector<int>primes;
+  vector<int>allPrimes;
+  set<int>removeDuplicate;
 
-    int res ;
-    int exhaust;
-
+  int res ;
+  int exhaust;
+  int randNum;
   string file_name= "ttt.txt";
   ofstream People(file_name, ios::out);
   // Write the output to the stream.
   cout<<"How many Number you want to generate?"<<endl;
   cin>>exhaust;
+  cout<<"Maximum Number For Random Number? Like 400,500"<<endl;
+  cin>>randNum;
+  srand (time(NULL));
   for(int i = 0;i<exhaust;i++){
-    res = (int )rand() % 2000 + 1;
+
+    res = (int )rand() % randNum + 1;
     People  << res <<" ";
     if(i % 5 == 0){
         People<<endl;
@@ -135,10 +144,10 @@ int main(){
   // Close the stream.
   People.close();
 
-  int i = 1;
+  int p = 0;
   ifstream People_in(file_name);
   int highNumber = 0;
-  while(i < exhaust){
+  while(p < exhaust){
 
         People_in >> res;
         sortedNumb.push_back(res);
@@ -149,7 +158,7 @@ int main(){
         //if(res > highNumber){
         //    highNumber = res;
         //}
-        i++;
+        p++;
   }
   People_in.close();
 
@@ -181,10 +190,13 @@ int main(){
     cout<<endl;
     cout<<"================================"<<endl;
     cout<<"Higest Number: "<<highNumber<<endl;
+    cout<<"================================"<<endl;
+
     int number;
     int foundNumber = false;
-    cout<<"enter Number to find"<<endl;
+    cout<<"Enter Number to find"<<endl;
     cin>>number;
+
     for(int i = 0; i<sortedNumb.size() + 1; i++){
             if(sortedNumb[i] == number){
                 foundNumber = true;
@@ -196,6 +208,43 @@ int main(){
         cout<<"Found It"<<endl;
     }else{
         cout<<"Sorry"<<endl;
+    }
+
+
+    cout<<"Showing All Prime Numbers "<<endl;
+
+   int n = randNum;
+    bool arr[n];
+    for(int i = 0; i< n; i++){
+        arr[i] = true;
+    }
+
+    for(int i = 2; i<n; i++){
+        if(arr[i]){
+            for(int c= i; i* c<n ;c++){
+                arr[i * c] = false;
+            }
+        }
+    }
+
+    for(int i = 1; i<n; i++){
+        if(arr[i]){
+            primes.push_back(i);
+        }
+    }
+
+    for(auto i: primes){
+        for(auto j:sortedNumb){
+            if(i == j){
+             removeDuplicate.insert(i);
+            }
+        }
+    }
+    cout<<"+++++++++++++++++++++++++"<<endl;
+
+
+    for(auto i: removeDuplicate){
+       cout<<i<<" ";
     }
 
 }
