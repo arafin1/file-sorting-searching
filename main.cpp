@@ -112,13 +112,14 @@ int main()
 }
 
 */
-bool binarySearch(vector<int>array, int numberToSearch, int low, int high) {
+int binarySearch(vector<int>array, int numberToSearch, int low, int high) {
 
+	// Repeat until the pointers low and high meet each other
   while (low <= high) {
     int mid = low + (high - low) / 2;
 
     if (array[mid] == numberToSearch)
-      return true;
+      return mid;
 
     if (array[mid] < numberToSearch)
       low = mid + 1;
@@ -127,7 +128,7 @@ bool binarySearch(vector<int>array, int numberToSearch, int low, int high) {
       high = mid - 1;
   }
 
-  return true;
+  return -1;
 }
 
 
@@ -209,28 +210,49 @@ int main(){
     cout<<"Higest Number: "<<highNumber<<endl;
     cout<<"================================"<<endl;
 
-    int number;
-    int foundNumber = false;
-    cout<<"Enter Number to find"<<endl;
-    cin>>number;
 
-  //  for(int i = 0; i<sortedNumb.size(); i++){
-   //         if(sortedNumb[i] == number){
-   //             foundNumber = true;
-   //         }
+/*
+    bool foundNumber = false;
+    for(int i = 0; i<sortedNumb.size() + 1; i++){
+            if(sortedNumb[i] == number){
+                foundNumber = true;
+            }
 
-   // }
-
-
-  int sizeOfsortedList = sortedNumb.size();
-  foundNumber = binarySearch(sortedNumb, number, 0, sizeOfsortedList - 1);
-
-    if(foundNumber){
-        cout<<"Found It"<<endl;
-
-    }else{
-         cout<<"Sorry"<<endl;
     }
+*/
+
+
+  set<int> arraySet;
+  for(auto i: sortedNumb){
+    arraySet.insert(i);
+  }
+
+  vector<int>array;
+  for(auto i: arraySet){
+    array.push_back(i);
+  }
+  cout<<"After Removing Duplicate"<<endl;
+  int newCounter = 1;
+  for(auto i: array){
+    cout<<i << " ";
+    if(newCounter % 5 == 0){
+        cout<<endl;
+    }
+    newCounter++;
+  }
+  cout<<endl;
+  int number;
+  cout<<"Enter Number to find"<<endl;
+  cin>>number;
+  int sizeofArray = array.size();
+  int result = binarySearch(array, number, 0, sizeofArray - 1);
+
+  if (result == -1)
+    cout<<"Not found"<<endl;
+  else
+    cout<<" Found"<<endl;
+
+
 
 
     cout<<"Showing All Prime Numbers "<<endl;
@@ -268,7 +290,5 @@ int main(){
     for(auto i: removeDuplicate){
        cout<<i<<" ";
     }
-
-
 
 }
