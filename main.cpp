@@ -112,6 +112,23 @@ int main()
 }
 
 */
+bool binarySearch(vector<int>array, int numberToSearch, int low, int high) {
+
+  while (low <= high) {
+    int mid = low + (high - low) / 2;
+
+    if (array[mid] == numberToSearch)
+      return true;
+
+    if (array[mid] < numberToSearch)
+      low = mid + 1;
+
+    else
+      high = mid - 1;
+  }
+
+  return true;
+}
 
 
 int main(){
@@ -197,17 +214,22 @@ int main(){
     cout<<"Enter Number to find"<<endl;
     cin>>number;
 
-    for(int i = 0; i<sortedNumb.size() + 1; i++){
-            if(sortedNumb[i] == number){
-                foundNumber = true;
-            }
+  //  for(int i = 0; i<sortedNumb.size(); i++){
+   //         if(sortedNumb[i] == number){
+   //             foundNumber = true;
+   //         }
 
-    }
+   // }
+
+
+  int sizeOfsortedList = sortedNumb.size();
+  foundNumber = binarySearch(sortedNumb, number, 0, sizeOfsortedList - 1);
 
     if(foundNumber){
         cout<<"Found It"<<endl;
+
     }else{
-        cout<<"Sorry"<<endl;
+         cout<<"Sorry"<<endl;
     }
 
 
@@ -246,5 +268,7 @@ int main(){
     for(auto i: removeDuplicate){
        cout<<i<<" ";
     }
+
+
 
 }
